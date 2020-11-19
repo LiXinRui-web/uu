@@ -2,11 +2,10 @@
   <div>
     <el-dialog :title="info.title" :visible.sync="info.isshow" @opened="opened" @closed="closed">
       <el-form :model="user" :rules="rules">
-        <!-- 2.绑定数据 -->
+       
         <el-form-item label="一级分类" label-width="120px" prop="first_cateid">
           <el-select placeholder="请选择一级分类" v-model="user.first_cateid" @change="changeFirst">
-            <!-- 6.遍历一级分类 -->
-
+         
             <el-option
               v-for="item in cateList"
               :key="item.id"

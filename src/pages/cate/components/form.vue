@@ -1,9 +1,9 @@
 <template>
   <div class="add">
-    <!-- 5.绑定info.isshow到模板 -->
+    
     <el-dialog :title="info.title" :visible.sync="info.isshow" @closed="closed">
-      <el-form :model="user">
-        <el-form-item label="上级分类" label-width="120px">
+      <el-form :model="user" :rules="rules">
+        <el-form-item label="上级分类" label-width="120px" prop="pid">
           <el-select v-model="user.pid" placeholder="请选择角色">
             <el-option :value="0" label="顶级分类"></el-option>
             <el-option
@@ -14,13 +14,13 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="分类名称" label-width="120px">
+        <el-form-item label="分类名称" label-width="120px" prop="catename">
           <el-input v-model="user.catename" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="图片" label-width="120px" v-if="user.pid!==0">
-          <!-- 1.原生js上传图片 -->
-          <!-- 1.绘制html +css  -->
-          <!-- 如果添加成功，此时，input上的文件应该清掉，所以直接将input节点清除 -->
+          <!-- 原生js上传图片 -->
+         
+        
           <!-- <div class="myupload">
             <h3>+</h3>
             <img class="img" v-if="imgUrl" :src="imgUrl" alt="">
@@ -28,7 +28,7 @@
             <input v-if="info.isshow" type="file" class="ipt" @change="changeFile">
           </div>-->
 
-          <!-- 2.element-ui 上传文件 -->
+        
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -66,6 +66,14 @@ import { successAlert, errorAlert } from "../../../utils/alert";
 export default {
   data() {
     return {
+      rules: {
+        pid: [
+          { required: true, message: "请输入上级分类", trigger: "change" }
+        ],
+        catename: [
+          { required: true, message: "请输入分类名称", trigger: "change" }
+        ],
+      },
       user: {
         pid: "",
         catename: "",

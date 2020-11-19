@@ -1,13 +1,13 @@
 <template>
   <div>
-    <!-- 5.绑定info.isshow到模板 -->
+   
     <el-dialog :title="info.title" :visible.sync="info.isshow" @closed="closed">
-      <el-form :model="user">
-        <el-form-item label="角色名称" label-width="120px">
+      <el-form :model="user" :rules="rules">
+        <el-form-item label="角色名称" label-width="120px" prop="rolename">
           <el-input v-model="user.rolename" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="角色权限" label-width="120px">
-          <!-- 14.将menuList 绑定到tree,配置props -->
+       
         <el-tree
           :data="menuList"
           show-checkbox
@@ -42,6 +42,11 @@ import { successAlert } from '../../../utils/alert';
 export default {
   data() {
     return {
+      rules: {
+        rolename: [
+          { required: true, message: "请输入角色名称", trigger: "change" }
+        ],
+      },
       user: {
         rolename: "",
         menus: "",

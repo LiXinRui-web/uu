@@ -1,14 +1,12 @@
 <template>
   <div class="add">
     <el-dialog :title="info.title" :visible.sync="info.isshow" @closed="closed">
-      <el-form :model="user">
-        <el-form-item label="标题" label-width="120px">
+      <el-form :model="user" :rules="rules">
+        <el-form-item label="标题" label-width="120px" prop="title">
           <el-input v-model="user.title" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="图片" label-width="120px" >
-          <!-- 1.原生js上传图片 -->
-          <!-- 1.绘制html +css  -->
-          <!-- 如果添加成功，此时，input上的文件应该清掉，所以直接将input节点清除 -->
+  
           <!-- <div class="myupload">
             <h3>+</h3>
             <img class="img" v-if="imgUrl" :src="imgUrl" alt="">
@@ -16,7 +14,7 @@
             <input v-if="info.isshow" type="file" class="ipt" @change="changeFile">
           </div>-->
 
-          <!-- 2.element-ui 上传文件 -->
+         
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -53,6 +51,11 @@ import { successAlert, errorAlert } from "../../../utils/alert";
 export default {
   data() {
     return {
+      rules: {
+        title: [
+          { required: true, message: "请输入标题", trigger: "change" }
+        ],
+      },
       user: {
         title: "",
         img: null,

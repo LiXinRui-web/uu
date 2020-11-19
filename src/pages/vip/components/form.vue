@@ -2,11 +2,11 @@
   <div>
     <!-- 5.绑定info.isshow到模板 -->
     <el-dialog :title="info.title" :visible.sync="info.isshow" @closed="closed">
-      <el-form :model="user">
-        <el-form-item label="手机号" label-width="120px">
+      <el-form :model="user" :rules="rules">
+        <el-form-item label="手机号" label-width="120px" prop="phone">
           <el-input v-model="user.phone" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="昵称" label-width="120px">
+        <el-form-item label="昵称" label-width="120px" prop="nickname">
           <el-input v-model="user.nickname" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" label-width="120px">
@@ -36,6 +36,10 @@ import { successAlert } from "../../../utils/alert";
 export default {
   data() {
     return {
+      rules: {
+        phone: [{ required: true, message: "请输入手机号", trigger: "change" }],
+        nickname: [{ required: true, message: "请输入昵称", trigger: "change" }]
+      },
       user: {
         phone: "",
         nickname: "",
@@ -43,7 +47,7 @@ export default {
         status: 1
       },
       list: []
-    }
+    };
   },
   props: ["info"],
   computed: {
@@ -56,29 +60,30 @@ export default {
     },
     empty() {
       this.user = {
-       phone: "",
+        phone: "",
         nickname: "",
         password: "",
         status: 1
       };
     },
     getOne(uid) {
-      
       reqMemberDetail(uid).then(res => {
         this.user = res.data.list;
         this.user.password = "";
       });
     },
     update() {
-    
-      reqMemberUpdate(this.user).then(res => {
-        if (res.data.code == 200) {
-          successAlert("修改成功"); 
-          this.cancel();
-          this.empty();
-          this.$emit("init");
-        }
-      });
+      if (this.user.password) {
+        reqMemberUpdate(this.user).then(res => {
+          if (res.data.code == 200) {
+            successAlert("修改成功");
+
+            this.$emit("init");
+          }
+        });
+      }
+      this.cancel();
+      this.empty();
     },
     closed() {
       if (this.info.title === "会员修改") {

@@ -3,7 +3,7 @@
     <div>
       <el-dialog :title="info.title" :visible.sync="info.isshow" @closed="closed">
         <el-form :model="user" :rules="rules">
-          <el-form-item label="活动名称" label-width="120px" prop="price">
+          <el-form-item label="活动名称" label-width="120px" prop="title">
             <el-input v-model="user.title" placeholder="请输入活动名称"></el-input>
           </el-form-item>
           <el-form-item label="活动期限" label-width="120px">
@@ -113,6 +113,9 @@ export default {
         status: 1
       },
       rules: {
+        title: [
+          { required: true, message: "请输入活动名称", trigger: "change" }
+        ],
         first_cateid: [
           { required: true, message: "请输入一级分类", trigger: "change" }
         ],

@@ -28,7 +28,7 @@ export default {
           // 指定图表的配置项和数据
           var option = {
             title: {
-              text: "商品出售情况"
+              text: "商品情况"
             },
             tooltip: {},
             legend: {
@@ -42,7 +42,7 @@ export default {
             series: [
               {
                 name: "子分类数量",
-                type: "bar",
+                type: "line",
                 data:this.list.map(item=>item.children?item.children.length:0)
               },
             ]

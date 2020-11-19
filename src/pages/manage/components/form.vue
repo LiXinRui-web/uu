@@ -1,10 +1,10 @@
 <template>
   <div>
 
-    <!-- 5.绑定info.isshow到模板 -->
+    
     <el-dialog :title="info.title" :visible.sync="info.isshow" @closed="closed">
-      <el-form :model="user">
-        <el-form-item label="所属角色" label-width="120px">
+      <el-form :model="user" :rules="rules">
+        <el-form-item label="所属角色" label-width="120px" prop="roleid">
           <el-select v-model="user.roleid"  placeholder="请选择角色">
             <el-option
               v-for="item in list"
@@ -14,7 +14,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户名" label-width="120px">
+        <el-form-item label="用户名" label-width="120px" prop="username">
           <el-input v-model="user.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" label-width="120px">
@@ -46,6 +46,14 @@ import { successAlert } from "../../../utils/alert";
 export default {
   data() {
     return {
+      rules: {
+        roleid: [
+          { required: true, message: "请输入角色名称", trigger: "change" }
+        ],
+        username : [
+          { required: true, message: "请输入用户名", trigger: "change" }
+        ],
+      },
       user: {
         roleid: "",
         username: "",
@@ -86,11 +94,11 @@ export default {
     getOne(uid) {
         console.log(uid)
       reqUserDetail(uid).then(res => {
-        //此刻user没有id,有uid
+      
       
         this.user = res.data.list;
 
-        //补id
+      
         this.user.password = "";
       });
     },

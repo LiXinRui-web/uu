@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-dialog :title="info.title" :visible.sync="info.isshow" @closed="closed">
-      <el-form :model="user">
-        <el-form-item label="规格名称" label-width="120px">
+      <el-form :model="user" :rules="rules">
+        <el-form-item label="规格名称" label-width="120px" prop="specsname">
           <el-input v-model="user.specsname" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="规格属性" label-width="120px" v-for="(item,index) in attrArr" :key="index">
@@ -37,6 +37,11 @@ import { successAlert, errorAlert } from "../../../utils/alert";
 export default {
   data() {
     return {
+      rules: {
+        specsname: [
+          { required: true, message: "请输入规格名称", trigger: "change" }
+        ]
+      },
       user: {
         specsname: "",
         attrs: "",
